@@ -1,0 +1,11 @@
+<bookstore>
+  <book>James</book>
+  <book>John</book>
+  <book>Jeff</book>
+  <book>Jerry</book>
+  <mag>Ed</mag>
+  <mag>Eddy</mag>
+  <tomb>
+    <paper>John</paper>
+  </tomb>
+</bookstore>
