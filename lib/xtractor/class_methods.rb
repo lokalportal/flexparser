@@ -9,7 +9,7 @@ module Xtractor
     #
     def parse(xml, _options = {})
       return if parsers.empty?
-      @doc = xml.is_a?(String) ? Nokogiri::XML(xml) : xml
+      @doc = FragmentBuilder.build(xml)
       new.tap do |instance|
         parsers.each do |parser|
           instance.public_send("#{parser.name}=", parser.parse(@doc))
@@ -17,12 +17,12 @@ module Xtractor
       end
     end
 
-    protected
-
     # no-doc
     def parsers
       @parsers ||= []
     end
+
+    protected
 
     #
     # Defines a CollectionParser belonging to the including class.
