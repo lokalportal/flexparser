@@ -21,8 +21,9 @@ module Xtractor
     #   will try to parse the string using ::parse
     #
     def parse(doc)
-      return options[:sub_parser].parse(content(doc)) if sub_parser
-      type ? transform(content(doc).text) : content(doc).text
+      result = content(doc) || return
+      return options[:sub_parser].parse(result) if sub_parser
+      type ? transform(result.text) : result.text
     end
 
     def name
@@ -42,20 +43,32 @@ module Xtractor
     end
 
     def type
-      options[:type]
+      options[:type] || options[:transform]
     end
 
     def transform(string)
-      options[:type].parse string
+      return options[:type].parse string if options[:type]
+      return string.public_send(options[:transform]) if options[:transform]
+      string
     end
 
     def content(doc)
-      xpaths.each do |path|
+      valid_paths(doc).each do |path|
         set = doc.xpath(path)
         return set unless set.empty?
       end
       return unless options[:required]
       raise_required_error(doc)
+    end
+
+    def valid_paths(doc)
+      xpaths.reject do |path|
+        path =~ /\w+:\w+/ && !namespace_available(path, doc)
+      end
+    end
+
+    def namespace_available(path, doc)
+      path.match Regexp.union(doc.namespaces.keys)
     end
 
     def raise_required_error(doc)

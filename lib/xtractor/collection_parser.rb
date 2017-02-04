@@ -17,15 +17,21 @@ module Xtractor
     end
 
     def xpaths
-      @xpaths ||= tags.map do |t|
+      tags.map do |t|
         XPath.current.descendant(t.to_sym)
-      end.reduce(&:union).to_s
+      end
     end
 
     protected
 
+    def valid_paths(doc)
+      xpaths.reject do |path|
+        path.to_s =~ /\w+:\w+/ && !namespace_available(path.to_s, doc)
+      end
+    end
+
     def content(doc)
-      content = doc.xpath(xpaths)
+      content = doc.xpath(valid_paths(doc).reduce(&:union).to_s)
       return content unless content.empty?
       options[:required] ? raise_required_error(doc) : content
     end
