@@ -16,22 +16,10 @@ module Xtractor
       end
     end
 
-    def xpaths
-      tags.map do |t|
-        XPath.current.descendant(t.to_sym)
-      end
-    end
-
     protected
 
-    def valid_paths(doc)
-      xpaths.reject do |path|
-        path.to_s =~ /\w+:\w+/ && !namespace_available(path.to_s, doc)
-      end
-    end
-
     def content(doc)
-      content = doc.xpath(valid_paths(doc).reduce(&:union).to_s)
+      content = doc.xpath(xpaths.valid_paths(doc).reduce(&:union).to_s)
       return content unless content.empty?
       options[:required] ? raise_required_error(doc) : content
     end
