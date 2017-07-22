@@ -13,8 +13,7 @@ module Xtractor
     end
 
     def test_xpaths_rendering
-      assert_equal parser.xpaths.count, 1
-      assert_equal parser.xpaths, ['.//bookstore']
+      assert_equal parser.xpaths.xpaths.count, 2
     end
 
     def test_single_tag

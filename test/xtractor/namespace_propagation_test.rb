@@ -43,7 +43,7 @@ module Xtractor
 
         node 'parts' do
           collection 'inventory' do
-            collection 'xmlns:tire'
+            collection 'tire'
           end
         end
       end
@@ -66,7 +66,7 @@ module Xtractor
     end
 
     def test_it_finds_namespaced_properties
-      assert_equal feed.parts.inventory.first.tires.count, 3
+      assert_equal feed.parts.inventory.first.tire.count, 3
     end
 
     def test_prefixed_namespace_propagation
