@@ -31,7 +31,7 @@ module Xtractor
     end
 
     def method_name
-      name.to_s.tr(':', '_')
+      name.to_s.sub(/^@/, '').tr(':', '_')
     end
 
     def xpaths
