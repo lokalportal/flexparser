@@ -1,3 +1,4 @@
+require 'byebug'
 require 'test_helper'
 
 module Xtractor
@@ -21,6 +22,21 @@ module Xtractor
       XML
     end
 
+    def pref_xml
+      <<-XML
+        <channel>
+          <rss version="2.0"
+          xmlns:blogChannel="http://backend.userland.com/blogChannelModule"
+          xmlns:content="http://purl.org/rss/1.0/modules/content/"
+          >
+
+          <content:encoded>
+            Hey James
+          </content:encoded>
+        </channel>
+      XML
+    end
+
     def parser
       Class.new do
         include ::Xtractor
@@ -30,6 +46,14 @@ module Xtractor
             collection 'xmlns:tire'
           end
         end
+      end
+    end
+
+    def pref_parser
+      Class.new do
+        include ::Xtractor
+
+        node 'content:encoded'
       end
     end
 
@@ -43,6 +67,11 @@ module Xtractor
 
     def test_it_finds_namespaced_properties
       assert_equal feed.parts.inventory.first.tires.count, 3
+    end
+
+    def test_prefixed_namespace_propagation
+      p_feed = pref_parser.parse(pref_xml)
+      assert p_feed.content_encoded
     end
   end
 end

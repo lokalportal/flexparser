@@ -9,7 +9,7 @@ module Xtractor
     attr_reader :doc
     attr_writer :namespaces
 
-    def_delegators :doc, :text, :empty?, :map, :each, :namespaces
+    def_delegators :@doc, :text, :empty?, :map, :each, :namespaces, :collect_namespaces
 
     def initialize(str, namespaces: {})
       @doc = str.is_a?(String) ? Nokogiri::XML(str) : str

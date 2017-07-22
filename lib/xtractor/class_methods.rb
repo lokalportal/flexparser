@@ -12,7 +12,7 @@ module Xtractor
       @doc = FragmentBuilder.build(xml)
       new.tap do |instance|
         parsers.each do |parser|
-          instance.public_send("#{parser.name}=", parser.parse(@doc))
+          instance.public_send("#{parser.method_name}=", parser.parse(@doc))
         end
       end
     end

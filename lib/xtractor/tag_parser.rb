@@ -30,6 +30,10 @@ module Xtractor
       options[:name] || tags.first
     end
 
+    def method_name
+      name.to_s.tr(':', '_')
+    end
+
     def xpaths
       @xpaths ||= tags.map do |t|
         XPath.current.descendant(t.to_sym)
@@ -63,12 +67,13 @@ module Xtractor
 
     def valid_paths(doc)
       xpaths.reject do |path|
-        path =~ /\w+:\w+/ && !namespace_available(path, doc)
+        path =~ /\w+:\w+/ && !namespace_available?(path, doc)
       end
     end
 
-    def namespace_available(path, doc)
-      path.match Regexp.union(doc.namespaces.keys)
+    def namespace_available?(path, doc)
+      nms = doc.propagating_namespaces.keys.map { |ns| ns.gsub('xmlns:', '') }
+      path.match Regexp.union(nms)
     end
 
     def raise_required_error(doc)

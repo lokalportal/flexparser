@@ -38,7 +38,7 @@ module Xtractor
     end
 
     def test_empty_namespaces
-      assert_equal fragment.pns, {}
+      assert_equal fragment('').pns, {}
     end
 
     def test_given_namespaces
