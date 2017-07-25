@@ -5,13 +5,15 @@ module Xtractor
   # A parser for a single tag.
   #
   class TagParser
+    attr_accessor :xpaths, :options
+
     #
     # @param name [Symbol] the name used for the accessor
     #   defined on the parent.
     # @param xpath [String] an xpath string used to access a Nokogiri-Fragment
     #
     def initialize(tags, **opts)
-      @tags    = tags
+      @xpaths  = XPaths.new(tags)
       @options = opts
     end
 
@@ -27,13 +29,7 @@ module Xtractor
     end
 
     def name
-      options[:name] || tags.first
-    end
-
-    def xpaths
-      @xpaths ||= tags.map do |t|
-        XPath.current.descendant(t.to_sym)
-      end.map(&:to_s)
+      options[:name] || xpaths.method_name
     end
 
     protected
@@ -53,29 +49,17 @@ module Xtractor
     end
 
     def content(doc)
-      valid_paths(doc).each do |path|
-        set = doc.xpath(path)
+      xpaths.valid_paths(doc).each do |path|
+        set = doc.xpath(path.to_s)
         return set unless set.empty?
       end
       return unless options[:required]
       raise_required_error(doc)
     end
 
-    def valid_paths(doc)
-      xpaths.reject do |path|
-        path =~ /\w+:\w+/ && !namespace_available(path, doc)
-      end
-    end
-
-    def namespace_available(path, doc)
-      path.match Regexp.union(doc.namespaces.keys)
-    end
-
     def raise_required_error(doc)
       raise(RequiredMissingError.new(self),
-            "Required field #{tags} not found in #{doc}")
+            "Required field #{name} not found in #{doc}")
     end
-
-    attr_accessor :tags, :options
   end
 end

@@ -4,6 +4,7 @@ require 'forwardable'
 
 require 'xtractor/version'
 require 'xtractor/fragment'
+require 'xtractor/xpaths'
 require 'xtractor/empty_fragment'
 require 'xtractor/fragment_builder'
 require 'xtractor/tag_parser'
