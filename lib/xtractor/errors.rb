@@ -12,4 +12,10 @@ module Xtractor
       @parser = parser
     end
   end
+
+  #
+  # An Error that is thrown when there is no clear name
+  #   for a property.
+  #
+  class AmbiguousNamingError < ArgumentError; end
 end
