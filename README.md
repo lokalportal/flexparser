@@ -119,6 +119,55 @@ class UniParser
   property %w[image picture @img media:image], name: 'visual', type: URI, collection: true
 end
 ```
+### Configuration
+You can configure Xtractor by using a block (for example in an initializer) like so:
+```ruby
+Xtractor.configure do |config|
+  config.option = value
+end
+```
+At time of writing there are two Options:
+
+####  `explicit_property_naming` 
+**Default: ** `true`
+If this is `true` you need to specify a `:name` for your `property` everytime there is more than one tag in your tag-list.
+Example: 
+```ruby
+# Bad!
+property %w[url link website]
+    
+# Good!
+property %w[url link website], name: 'website'
+    
+# Don't care! Unambiguous!
+property 'url'
+```
+#### `retry_without_namespaces`
+**Default:** `true`
+If true, `Xtractor` will add a second set of xpaths to the list of tags you specified, that will ignore namespaces completely.
+Example: 
+```ruby
+Xtractor.configure { |c| c.retry_without_namespaces = false }
+class SomeParser
+  property 'inventory'
+end
+
+xml = "<inventory xmlns="www.my-inventory.com">james</inventory>"
+
+# The inventory can't be found because it is namespaced.
+SomeParser.parse(xml).inventory #=> nil :(
+
+Xtractor.configure { |c| c.retry_without_namespaces = true }
+class SomeBetterParser
+  property 'inventory'
+end
+
+xml = "<inventory xmlns="www.my-inventory.com">james</inventory>"
+
+# The inventory can be found because we don't care.
+SomeParser.parse(xml).inventory #=> 'james'
+```
+The Xpath used here adheres to xpath version 1.X.X and uses the name property `.//[name()='inventory']`
 
 ## Development
 
