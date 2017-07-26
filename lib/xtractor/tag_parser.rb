@@ -50,7 +50,7 @@ module Xtractor
 
     def content(doc)
       xpaths.valid_paths(doc).each do |path|
-        set = doc.xpath(path.to_s)
+        set = doc.xpath("(#{path})[1]")
         return set unless set.empty?
       end
       return unless options[:required]
