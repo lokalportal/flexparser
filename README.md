@@ -141,6 +141,7 @@ property %w[url link website], name: 'website'
     
 # Don't care! Unambiguous!
 property 'url'
+property ['width']
 ```
 #### `retry_without_namespaces`
 **Default:** `true`
