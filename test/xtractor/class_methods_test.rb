@@ -26,11 +26,11 @@ module Xtractor
       Class.new do
         include ::Xtractor
 
-        node 'bookstore' do
-          node 'category'
-          collection 'book' do
-            node 'title'
-            node 'isbn', name: :id, transform: :to_i
+        property 'bookstore' do
+          property 'category'
+          property 'book', collection: true do
+            property 'title'
+            property 'isbn', name: :id, transform: :to_i
           end
         end
       end
