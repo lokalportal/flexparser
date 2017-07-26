@@ -17,9 +17,9 @@ module Xtractor
       Class.new do
         include Xtractor
 
-        node '@url'
-        node %w[size @width], transform: :to_i
-        node 'realImage/@url', name: :super_url
+        property '@url'
+        property %w[size @width], transform: :to_i
+        property 'realImage/@url', name: :super_url
       end
     end
 

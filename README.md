@@ -22,7 +22,7 @@ Lets start simple:
 class WebParser
   include Xtractor
 
-  node 'url'
+  property 'url'
 end
 ```
 Now this class is able to parse xml similar to this:
@@ -49,8 +49,8 @@ books = '
                  
 class LovecraftParser
   include Xtractor
-  
-  collection 'story'
+
+  property 'story', collection: true
 end
 
 work = LovecraftParser.parse books
@@ -73,10 +73,10 @@ library = "
 class LibraryParser
   include Xtractor
   
-  collection 'book' do
+  property 'book', collection: true do
     attr_accessor :isbn
-    node 'author'
-    node 'title'
+    property 'author'
+    property 'title'
   end
 end
 
@@ -95,28 +95,28 @@ class UniParser
   include Xtractor
   
   # Creates accessors called 'url' and 'url=' but will look for nodes with the name url, link and website. Will return the first thing it finds.
-  node %w[url link website]
+  property %w[url link website]
   
   # Creates a property called main_header and will look for message and title
-  node %w[message title], name: 'main_header'
+  property %w[message title], name: 'main_header'
   
   # This will define a property called width and will look for an attribute of the same name
-  node '@width'
+  property '@width'
   
-  # This will defina a property called `image_url` that will look for a node called 'image' and extract its 'url' attribute
-  node 'image/@url'
+  # This will define a property called `image_url` that will look for a node called 'image' and extract its 'url' attribute
+  property 'image/@url'
   
   # This will look for a tag called encoded with the namespace content
-  node 'content:encoded'
+  property 'content:encoded'
   
   # Here we define a transformation to make the parser return an integer
-  node 'height', transform: :to_i
+  property 'height', transform: :to_i
   
   # An alternative to the transformation is a type. The type must have a #parse method that receives a string
-  node 'url', type: URI
+  property 'url', type: URI
   
   # A little bit of everything
-  collection %w[image picture @img media:image], name: 'visual', type: URI
+  property %w[image picture @img media:image], name: 'visual', type: URI, collection: true
 end
 ```
 
@@ -125,21 +125,21 @@ end
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake test` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
 
 ### How it works (in a nutshell)
-The `Xtractor` module defines certain class methods. Most importantly `node` and `collection` which work in similar ways.
-`node` for example takes a `String` or an array of strings as well as some options. The `node` method instantiates a `TagParser` and adds it to the `@tags` property of the class that is including `Xtractor` (we'll call it MainClass from here on out), which holds an array of all the `TagParser`s and `CollectionParser`s . It also defines accessors for the *name* of the property the `node` parser should extract. 
+The `Xtractor` module defines certain class methods. Most importantly `property` works in similar ways.
+`property` takes a `String` or an array of strings as well as some options. The `property` method instantiates a `TagParser` and adds it to the `@tags` property of the class that is including `Xtractor` (we'll call it MainClass from here on out), which holds an array of all the `TagParser`s and `CollectionParser`s . It also defines accessors for the *name* of the property the `property` parser should extract. 
 
 The Parsers use an instance of `Xtractor::XPaths` to handle the array of tags that they are passed.
 When everything is setup (i.e. the class is loaded), you can call `::parse` on your MainClass and pass it an XML string.  At this point the MainClass instantiates itself and the `TagParser`s and `CollectionParser`s extract a value from the xml, that is then assigned to the newly created MainClass instance.
 
 #### Defining a parser with a block
-When definen nested parsers, you would use a block. Like this:
+When defining nested parsers, you would use a block. Like this:
 ```ruby
 class ParserClass
   include Xtractor
   
-  collection 'story' do
-    node 'author'
-    node 'title'
+  property 'story', collection: true do
+    property 'author'
+    property 'title'
   end
 end
 ```

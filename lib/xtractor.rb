@@ -14,7 +14,7 @@ require 'xtractor/anonymous_parser'
 
 #
 # Main module that, when included, provides
-# the including class access to the node building
+# the including class access to the property building
 # structure.
 #
 module Xtractor
