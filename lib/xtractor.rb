@@ -3,6 +3,7 @@ require 'nokogiri'
 require 'forwardable'
 
 require 'xtractor/version'
+require 'xtractor/errors'
 require 'xtractor/configuration'
 require 'xtractor/fragment'
 require 'xtractor/xpaths'
