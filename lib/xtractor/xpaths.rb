@@ -22,7 +22,7 @@ module Xtractor
     # The name of an accesor, based on the collection of tags.
     #
     def method_name
-      tags.first.to_s.sub(/^@/, '').tr(':', '_')
+      tags.first.to_s.sub(/^@/, '').gsub(/([[:punct:]]|-)+/, '_')
     end
 
     #
@@ -33,7 +33,10 @@ module Xtractor
                     paths = tags.map do |t|
                       XPath.current.descendant(t)
                     end
-                    paths + ns_ignortant_xpaths
+                    if Xtractor.configuration.retry_without_namespaces
+                      paths += ns_ignortant_xpaths
+                    end
+                    paths
                   end
     end
 

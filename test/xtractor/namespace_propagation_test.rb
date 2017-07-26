@@ -41,9 +41,9 @@ module Xtractor
       Class.new do
         include ::Xtractor
 
-        node 'parts' do
-          collection 'inventory' do
-            collection 'tire'
+        property 'parts' do
+          property 'inventory', collection: true do
+            property 'tire', collection: true
           end
         end
       end
@@ -53,7 +53,7 @@ module Xtractor
       Class.new do
         include ::Xtractor
 
-        node 'content:encoded'
+        property 'content:encoded'
       end
     end
 

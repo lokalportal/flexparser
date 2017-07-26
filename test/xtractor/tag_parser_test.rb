@@ -23,7 +23,7 @@ module Xtractor
 
     def test_subparser
       sub_parser = model do
-        node 'title'
+        property 'title'
       end
       main_parser = parser(%w(book), sub_parser: sub_parser)
       tag = Nokogiri::XML(' <book>

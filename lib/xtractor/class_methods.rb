@@ -4,7 +4,7 @@ module Xtractor
   #
   module ClassMethods
     #
-    # Applies the previously set up node-structure to the given xml
+    # Applies the previously set up property-structure to the given xml
     # and returns Instances of the including Class.
     #
     def parse(xml, _options = {})
@@ -37,24 +37,16 @@ module Xtractor
     # @option opts [Boolean] :required if true, raises an
     #   `Xtractor::RequiredMissingError` if the resulting value is `nil`.
     #
-    def node(tags, **opts, &block)
-      add_parser(TagParser, tags, opts, &block)
-    end
-
-    #
-    # Defines a CollectionParser belonging to the including class.
-    # @see self#node
-    # @param sub_parser [Xtractor] a class that defines the `#parse` method that
-    #   can deal with the data it receives.
-    #
-    def collection(tags, **opts, &block)
-      add_parser(CollectionParser, tags, opts, &block)
+    def property(tags, collection: false, **opts, &block)
+      check_ambiguous_naming!(tags, opts)
+      parser_klass = collection ? CollectionParser : TagParser
+      add_parser(parser_klass, tags, opts, &block)
     end
 
     #
     # Adds a parser with a given class and options to the list
     # of parsers this class holds.
-    # @see self#node
+    # @see self#property
     # @param klass [Xtractor::TagParser] either a collection or a single
     #   {TagParser}
     #
@@ -82,7 +74,20 @@ module Xtractor
     #   Will most likely be a tag.
     #
     def define_accessors(name)
-      attr_accessor name.to_s.sub(/^@/, '').gsub(/[[:punct:]]|-/, '_')
+      attr_accessor name.to_s.sub(/^@/, '').gsub(/([[:punct:]]|-)+/, '_')
+    end
+
+    #
+    # Raises an error if the name of a parser is ambiguous and the options
+    #   forbid it from beeing so.
+    #
+    def check_ambiguous_naming!(tags, opts)
+      return unless Xtractor.configuration.explicit_property_naming &&
+                    opts[:name].nil? &&
+                    tags.respond_to?(:each) && tags.length > 1
+      raise(AmbiguousNamingError,
+            "You need to specify a name for the property (#{tags})
+            with the :name option.")
     end
   end
 end
