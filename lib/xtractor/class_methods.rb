@@ -82,7 +82,7 @@ module Xtractor
     #   Will most likely be a tag.
     #
     def define_accessors(name)
-      attr_accessor name.to_s.sub(/^@/, '').gsub(/[[:punct:]]|-/, '_')
+      attr_accessor name.to_s.sub(/^@/, '').gsub(/([[:punct:]]|-)+/, '_')
     end
   end
 end

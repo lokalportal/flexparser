@@ -4,7 +4,12 @@ module Xtractor
   class AttributeExtractionTest < Minitest::Test
     def xml
       <<-XML
-      <image url="www.my-image.com" width="430"></image>
+      <frame>
+        <image url="www.my-image.com" width="430"></image>
+        <picture url="www.wrong-url.com">
+          <realImage url="www.right-url.com"></realImage>
+        </picture>
+      </frame>
       XML
     end
 
@@ -14,6 +19,7 @@ module Xtractor
 
         node '@url'
         node %w[size @width], transform: :to_i
+        node 'realImage/@url', name: :super_url
       end
     end
 
@@ -32,6 +38,10 @@ module Xtractor
 
     def test_finds_attribute_by_correct_name
       assert_equal image.size, 430
+    end
+
+    def test_finds_specific_url
+      assert_equal image.super_url, 'www.right-url.com'
     end
   end
 end

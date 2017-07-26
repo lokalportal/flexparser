@@ -103,6 +103,9 @@ class UniParser
   # This will define a property called width and will look for an attribute of the same name
   node '@width'
   
+  # This will defina a property called `image_url` that will look for a node called 'image' and extract its 'url' attribute
+  node 'image/@url'
+  
   # This will look for a tag called encoded with the namespace content
   node 'content:encoded'
   
