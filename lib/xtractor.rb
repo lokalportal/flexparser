@@ -3,6 +3,8 @@ require 'nokogiri'
 require 'forwardable'
 
 require 'xtractor/version'
+require 'xtractor/errors'
+require 'xtractor/configuration'
 require 'xtractor/fragment'
 require 'xtractor/xpaths'
 require 'xtractor/empty_fragment'
@@ -18,6 +20,17 @@ require 'xtractor/anonymous_parser'
 # structure.
 #
 module Xtractor
+  class << self
+    def configuration
+      @configuration ||= Configuration.new
+    end
+
+    def configure
+      yield(configuration)
+      configuration
+    end
+  end
+
   def self.included(base)
     base.extend ClassMethods
   end

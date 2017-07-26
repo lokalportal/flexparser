@@ -33,7 +33,10 @@ module Xtractor
                     paths = tags.map do |t|
                       XPath.current.descendant(t)
                     end
-                    paths + ns_ignortant_xpaths
+                    if Xtractor.configuration.retry_without_namespaces
+                      paths += ns_ignortant_xpaths
+                    end
+                    paths
                   end
     end
 

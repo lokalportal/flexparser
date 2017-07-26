@@ -38,6 +38,7 @@ module Xtractor
     #   `Xtractor::RequiredMissingError` if the resulting value is `nil`.
     #
     def property(tags, collection: false, **opts, &block)
+      check_ambiguous_naming!(tags, opts)
       parser_klass = collection ? CollectionParser : TagParser
       add_parser(parser_klass, tags, opts, &block)
     end
@@ -74,6 +75,19 @@ module Xtractor
     #
     def define_accessors(name)
       attr_accessor name.to_s.sub(/^@/, '').gsub(/([[:punct:]]|-)+/, '_')
+    end
+
+    #
+    # Raises an error if the name of a parser is ambiguous and the options
+    #   forbid it from beeing so.
+    #
+    def check_ambiguous_naming!(tags, opts)
+      return unless Xtractor.configuration.explicit_property_naming &&
+                    opts[:name].nil? &&
+                    tags.respond_to?(:each) && tags.length > 1
+      raise(AmbiguousNamingError,
+            "You need to specify a name for the property (#{tags})
+            with the :name option.")
     end
   end
 end
