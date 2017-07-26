@@ -4,7 +4,7 @@ module Xtractor
   #
   class Configuration
     AVAILABLE_OPTIONS =
-      %i[rety_without_namespaces explicit_property_naming].freeze
+      %i[retry_without_namespaces explicit_property_naming].freeze
     attr_accessor(*AVAILABLE_OPTIONS)
 
     def initialize
@@ -16,7 +16,7 @@ module Xtractor
     end
 
     def set_defaults
-      @rety_without_namespaces  = true
+      @retry_without_namespaces = true
       @explicit_property_naming = true
     end
   end
