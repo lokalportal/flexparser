@@ -1,4 +1,5 @@
 # coding: utf-8
+
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'flexparser/version'
@@ -8,7 +9,8 @@ Gem::Specification.new do |spec|
   spec.version       = Flexparser::VERSION
   spec.authors       = ['Paul Martensen']
   spec.email         = ['paul.martensen@gmx.de']
-
+  spec.licenses      = ['GPL-3.0']
+  spec.homepage      = 'https://github.com/lokalportal/flexparser'
   spec.summary       = 'A xml-parser dsl'
   spec.description   = 'A flexible and robust parser-dsl.'
 
@@ -26,8 +28,8 @@ Gem::Specification.new do |spec|
   spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
   spec.require_paths = ['lib']
 
-  spec.add_dependency 'nokogiri'
-  spec.add_dependency 'xpath'
+  spec.add_dependency 'nokogiri', '~> 1.7'
+  spec.add_dependency 'xpath', '~> 2.1'
   spec.add_development_dependency 'guard'
   spec.add_development_dependency 'guard-minitest'
   spec.add_development_dependency 'pry-byebug'

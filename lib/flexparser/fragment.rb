@@ -9,7 +9,8 @@ module Flexparser
     attr_reader :doc
     attr_writer :namespaces
 
-    def_delegators :@doc, :text, :empty?, :map, :each, :namespaces, :collect_namespaces
+    def_delegators(:@doc, :text, :empty?, :map,
+                   :each, :namespaces, :collect_namespaces)
 
     def initialize(str, namespaces: {})
       @doc = str.is_a?(String) ? Nokogiri::XML(str) : str
@@ -32,7 +33,9 @@ module Flexparser
 
     def propagating_namespaces
       return @propagated_namespaces unless doc.respond_to?(:namespaces)
-      return @propagated_namespaces.merge doc.collect_namespaces if doc.respond_to?(:collect_namespaces)
+      if doc.respond_to?(:collect_namespaces)
+        return @propagated_namespaces.merge doc.collect_namespaces
+      end
       @propagated_namespaces.merge doc.namespaces
     end
 

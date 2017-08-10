@@ -58,7 +58,8 @@ module Flexparser
     end
 
     #
-    # Creates a new anonymous Parser class based on {Flexparser::AnonymousParser}.
+    # Creates a new anonymous Parser class
+    #   based on {Flexparser::AnonymousParser}.
     # @param block [Block] The block that holds the classes parser,
     #   methods and so on.
     #
