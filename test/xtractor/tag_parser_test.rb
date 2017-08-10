@@ -2,7 +2,7 @@ require 'test_helper'
 
 module Flexparser
   class TagParserTest < Minitest::Test
-    def parser(tags = %w(bookstore), **opts)
+    def parser(tags = %w[bookstore], **opts)
       TagParser.new(tags, opts)
     end
 
@@ -18,14 +18,14 @@ module Flexparser
 
     def test_single_tag
       tag = Nokogiri::XML('<title>James</title>')
-      assert_equal parser(%w(title)).parse(tag), 'James'
+      assert_equal parser(%w[title]).parse(tag), 'James'
     end
 
     def test_subparser
       sub_parser = model do
         property 'title'
       end
-      main_parser = parser(%w(book), sub_parser: sub_parser)
+      main_parser = parser(%w[book], sub_parser: sub_parser)
       tag = Nokogiri::XML(' <book>
                               <title>James</title>
                             </book> ')

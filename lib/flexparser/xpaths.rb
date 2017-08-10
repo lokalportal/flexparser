@@ -42,7 +42,8 @@ module Flexparser
 
     #
     # Returns the valid paths from this collection, based on the given doc.
-    # @param doc [Flexparser::Fragment] the fragment that carries the namespaces.
+    # @param doc [Flexparser::Fragment] the fragment
+    #   that carries the namespaces.
     # @return [Array<String>] the xpaths that can be applied to this fragment
     #
     def valid_paths(doc)
@@ -73,7 +74,8 @@ module Flexparser
     #
     # Checks whether or not a path is can be applied to a given fragment.
     # @param path [String] the path that is to be checked
-    # @param doc [Flexparser::Fragment] the fragment that carries the namespaces.
+    # @param doc [Flexparser::Fragment] the fragment that carries the
+    #   namespaces.
     # @return [Boolean] true if the path can be applied, false otherwise.
     #
     def namespace_available?(path, doc)
