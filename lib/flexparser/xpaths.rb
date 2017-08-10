@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Xtractor
+module Flexparser
   #
   # A class to represent a collection of paths.
   # This class is supposed to be more convenient for
@@ -33,7 +33,7 @@ module Xtractor
                     paths = tags.map do |t|
                       XPath.current.descendant(t)
                     end
-                    if Xtractor.configuration.retry_without_namespaces
+                    if Flexparser.configuration.retry_without_namespaces
                       paths += ns_ignortant_xpaths
                     end
                     paths
@@ -42,7 +42,7 @@ module Xtractor
 
     #
     # Returns the valid paths from this collection, based on the given doc.
-    # @param doc [Xtractor::Fragment] the fragment that carries the namespaces.
+    # @param doc [Flexparser::Fragment] the fragment that carries the namespaces.
     # @return [Array<String>] the xpaths that can be applied to this fragment
     #
     def valid_paths(doc)
@@ -73,7 +73,7 @@ module Xtractor
     #
     # Checks whether or not a path is can be applied to a given fragment.
     # @param path [String] the path that is to be checked
-    # @param doc [Xtractor::Fragment] the fragment that carries the namespaces.
+    # @param doc [Flexparser::Fragment] the fragment that carries the namespaces.
     # @return [Boolean] true if the path can be applied, false otherwise.
     #
     def namespace_available?(path, doc)

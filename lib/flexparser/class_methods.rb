@@ -1,4 +1,4 @@
-module Xtractor
+module Flexparser
   #
   # The ClassMethods defined on the including base.
   #
@@ -35,7 +35,7 @@ module Xtractor
     # @option opts [Class] :type a class that implements `::parse` to
     #   return an instance of itself, parsed from the resulting value.
     # @option opts [Boolean] :required if true, raises an
-    #   `Xtractor::RequiredMissingError` if the resulting value is `nil`.
+    #   `Flexparser::RequiredMissingError` if the resulting value is `nil`.
     #
     def property(tags, collection: false, **opts, &block)
       check_ambiguous_naming!(tags, opts)
@@ -47,7 +47,7 @@ module Xtractor
     # Adds a parser with a given class and options to the list
     # of parsers this class holds.
     # @see self#property
-    # @param klass [Xtractor::TagParser] either a collection or a single
+    # @param klass [Flexparser::TagParser] either a collection or a single
     #   {TagParser}
     #
     def add_parser(klass, tags, **opts, &block)
@@ -58,7 +58,7 @@ module Xtractor
     end
 
     #
-    # Creates a new anonymous Parser class based on {Xtractor::AnonymousParser}.
+    # Creates a new anonymous Parser class based on {Flexparser::AnonymousParser}.
     # @param block [Block] The block that holds the classes parser,
     #   methods and so on.
     #
@@ -82,7 +82,7 @@ module Xtractor
     #   forbid it from beeing so.
     #
     def check_ambiguous_naming!(tags, opts)
-      return unless Xtractor.configuration.explicit_property_naming &&
+      return unless Flexparser.configuration.explicit_property_naming &&
                     opts[:name].nil? &&
                     tags.respond_to?(:each) && tags.length > 1
       raise(AmbiguousNamingError,

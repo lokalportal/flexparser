@@ -1,11 +1,11 @@
 # coding: utf-8
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'xtractor/version'
+require 'flexparser/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = 'xtractor'
-  spec.version       = Xtractor::VERSION
+  spec.name          = 'flexparser'
+  spec.version       = Flexparser::VERSION
   spec.authors       = ['Paul Martensen']
   spec.email         = ['paul.martensen@gmx.de']
 

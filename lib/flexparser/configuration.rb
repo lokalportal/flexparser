@@ -1,4 +1,4 @@
-module Xtractor
+module Flexparser
   #
   # Class to keep config-options for the whole module.
   #

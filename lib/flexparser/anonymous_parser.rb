@@ -1,4 +1,4 @@
-module Xtractor
+module Flexparser
   #
   # A semi-anonymous class used for building the node
   # structure.

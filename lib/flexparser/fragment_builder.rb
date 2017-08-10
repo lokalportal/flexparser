@@ -1,4 +1,4 @@
-module Xtractor
+module Flexparser
   class FragmentBuilder
     class << self
       def build(str, namespaces: {})

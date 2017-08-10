@@ -2,7 +2,7 @@
 
 require 'test_helper'
 
-module Xtractor
+module Flexparser
   class XPathsTest
     def test_method_name
       xpaths = XPaths.new(%w[@url link])

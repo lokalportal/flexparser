@@ -2,24 +2,24 @@ require 'xpath'
 require 'nokogiri'
 require 'forwardable'
 
-require 'xtractor/version'
-require 'xtractor/errors'
-require 'xtractor/configuration'
-require 'xtractor/fragment'
-require 'xtractor/xpaths'
-require 'xtractor/empty_fragment'
-require 'xtractor/fragment_builder'
-require 'xtractor/tag_parser'
-require 'xtractor/collection_parser'
-require 'xtractor/class_methods'
-require 'xtractor/anonymous_parser'
+require 'flexparser/version'
+require 'flexparser/errors'
+require 'flexparser/configuration'
+require 'flexparser/fragment'
+require 'flexparser/xpaths'
+require 'flexparser/empty_fragment'
+require 'flexparser/fragment_builder'
+require 'flexparser/tag_parser'
+require 'flexparser/collection_parser'
+require 'flexparser/class_methods'
+require 'flexparser/anonymous_parser'
 
 #
 # Main module that, when included, provides
 # the including class access to the property building
 # structure.
 #
-module Xtractor
+module Flexparser
   class << self
     def configuration
       @configuration ||= Configuration.new

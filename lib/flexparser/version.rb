@@ -1,3 +1,3 @@
-module Xtractor
+module Flexparser
   VERSION = '1.0.0'.freeze
 end

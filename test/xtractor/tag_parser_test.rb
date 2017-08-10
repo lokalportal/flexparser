@@ -1,6 +1,6 @@
 require 'test_helper'
 
-module Xtractor
+module Flexparser
   class TagParserTest < Minitest::Test
     def parser(tags = %w(bookstore), **opts)
       TagParser.new(tags, opts)

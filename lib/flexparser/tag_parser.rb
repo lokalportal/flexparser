@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Xtractor
+module Flexparser
   #
   # A parser for a single tag.
   #

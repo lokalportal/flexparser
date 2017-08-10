@@ -1,4 +1,4 @@
-module Xtractor
+module Flexparser
   #
   # A Parser similar to the TagParser but intendet for a collection
   # of propertys.

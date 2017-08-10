@@ -1,4 +1,4 @@
-module Xtractor
+module Flexparser
   class Error < StandardError; end
 
   #

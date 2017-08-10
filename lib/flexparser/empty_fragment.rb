@@ -1,4 +1,4 @@
-module Xtractor
+module Flexparser
   class EmptyFragment < Fragment
     def xpath(_path)
       self.class.new(nil)

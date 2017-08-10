@@ -1,4 +1,4 @@
 source 'https://rubygems.org'
 
-# Specify your gem's dependencies in xtractor.gemspec
+# Specify your gem's dependencies in flexparser.gemspec
 gemspec

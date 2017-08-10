@@ -1,6 +1,6 @@
 require 'test_helper'
 
-module Xtractor
+module Flexparser
   class AttributeExtractionTest < Minitest::Test
     def xml
       <<-XML
@@ -15,7 +15,7 @@ module Xtractor
 
     def img_parser
       Class.new do
-        include Xtractor
+        include Flexparser
 
         property '@url'
         property %w[size @width], transform: :to_i

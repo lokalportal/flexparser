@@ -1,26 +1,26 @@
-# Xtractor
-`Xtractor` provides an easy to use DSL for flexible, robust xml parsers.  The goal of extractor is to be able to write **One Parser to parse them all**. 
+# Flexparser
+`Flexparser` provides an easy to use DSL for flexible, robust xml parsers.  The goal of eflexparser is to be able to write **One Parser to parse them all**. 
 
 ## Installation
 
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'xtractor', path: 'vendor/gems/' # Or whereever you have extractor stored
+gem 'flexparser', path: 'vendor/gems/' # Or whereever you have eflexparser stored
 ```
 
 Since this gem is private, it can only be vendored into a project right now. 
 
-**BEWARE:** Since i started working on this gem, another gem by the name of `xtractor` has been published to rubygems. So calling `gem install xtractor` will in fact install the wrong gem.
+**BEWARE:** Since i started working on this gem, another gem by the name of `flexparser` has been published to rubygems. So calling `gem install flexparser` will in fact install the wrong gem.
 
 ## Usage
 #### Basics:
 
-Including the `Xtractor` module in any Class turns it into a parser. 
+Including the `Flexparser` module in any Class turns it into a parser. 
 Lets start simple:
 ```ruby
 class WebParser
-  include Xtractor
+  include Flexparser
 
   property 'url'
 end
@@ -48,7 +48,7 @@ books = '
                 '
                  
 class LovecraftParser
-  include Xtractor
+  include Flexparser
 
   property 'story', collection: true
 end
@@ -71,7 +71,7 @@ library = "
 </book>"
 
 class LibraryParser
-  include Xtractor
+  include Flexparser
   
   property 'book', collection: true do
     attr_accessor :isbn
@@ -92,7 +92,7 @@ With nested parsers, anonymous classes are defined inside an existing parser. Th
 You might not always know (or it might not always be the same), what the information you are looking for is called. If that is the case, you can define multiple tags for the same property. Here are a few examples:
 ```ruby
 class UniParser
-  include Xtractor
+  include Flexparser
   
   # Creates accessors called 'url' and 'url=' but will look for nodes with the name url, link and website. Will return the first thing it finds.
   property %w[url link website]
@@ -120,9 +120,9 @@ class UniParser
 end
 ```
 ### Configuration
-You can configure Xtractor by using a block (for example in an initializer) like so:
+You can configure Flexparser by using a block (for example in an initializer) like so:
 ```ruby
-Xtractor.configure do |config|
+Flexparser.configure do |config|
   config.option = value
 end
 ```
@@ -145,10 +145,10 @@ property ['width']
 ```
 #### `retry_without_namespaces`
 **Default:** `true`
-If true, `Xtractor` will add a second set of xpaths to the list of tags you specified, that will ignore namespaces completely.
+If true, `Flexparser` will add a second set of xpaths to the list of tags you specified, that will ignore namespaces completely.
 Example: 
 ```ruby
-Xtractor.configure { |c| c.retry_without_namespaces = false }
+Flexparser.configure { |c| c.retry_without_namespaces = false }
 class SomeParser
   property 'inventory'
 end
@@ -158,7 +158,7 @@ xml = "<inventory xmlns="www.my-inventory.com">james</inventory>"
 # The inventory can't be found because it is namespaced.
 SomeParser.parse(xml).inventory #=> nil :(
 
-Xtractor.configure { |c| c.retry_without_namespaces = true }
+Flexparser.configure { |c| c.retry_without_namespaces = true }
 class SomeBetterParser
   property 'inventory'
 end
@@ -175,17 +175,17 @@ The Xpath used here adheres to xpath version 1.X.X and uses the name property `.
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake test` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
 
 ### How it works (in a nutshell)
-The `Xtractor` module defines certain class methods. Most importantly `property` works in similar ways.
-`property` takes a `String` or an array of strings as well as some options. The `property` method instantiates a `TagParser` and adds it to the `@tags` property of the class that is including `Xtractor` (we'll call it MainClass from here on out), which holds an array of all the `TagParser`s and `CollectionParser`s . It also defines accessors for the *name* of the property the `property` parser should extract. 
+The `Flexparser` module defines certain class methods. Most importantly `property` works in similar ways.
+`property` takes a `String` or an array of strings as well as some options. The `property` method instantiates a `TagParser` and adds it to the `@tags` property of the class that is including `Flexparser` (we'll call it MainClass from here on out), which holds an array of all the `TagParser`s and `CollectionParser`s . It also defines accessors for the *name* of the property the `property` parser should extract. 
 
-The Parsers use an instance of `Xtractor::XPaths` to handle the array of tags that they are passed.
+The Parsers use an instance of `Flexparser::XPaths` to handle the array of tags that they are passed.
 When everything is setup (i.e. the class is loaded), you can call `::parse` on your MainClass and pass it an XML string.  At this point the MainClass instantiates itself and the `TagParser`s and `CollectionParser`s extract a value from the xml, that is then assigned to the newly created MainClass instance.
 
 #### Defining a parser with a block
 When defining nested parsers, you would use a block. Like this:
 ```ruby
 class ParserClass
-  include Xtractor
+  include Flexparser
   
   property 'story', collection: true do
     property 'author'
@@ -195,6 +195,6 @@ end
 ```
 When passing a block to a parser definition, a new class is created that basically looks like this:
 ```ruby
-Class.new { include Xtractor }
+Class.new { include Flexparser }
 ```
 The block is then `class_eval`ed on this anonymous class. Thats gives you a lot of flexibility in definen your parsers. 
