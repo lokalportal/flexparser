@@ -9,6 +9,7 @@ Gem::Specification.new do |spec|
   spec.version       = Flexparser::VERSION
   spec.authors       = ['Paul Martensen']
   spec.email         = ['paul.martensen@gmx.de']
+  spec.licenses      = ['GPL-3.0']
   spec.homepage      = 'https://github.com/lokalportal/flexparser'
   spec.summary       = 'A xml-parser dsl'
   spec.description   = 'A flexible and robust parser-dsl.'
