@@ -1,7 +1,7 @@
 require 'byebug'
 require 'test_helper'
 
-module Xtractor
+module Flexparser
   class NamespacePropagationTest < Minitest::Test
     def xml
       <<-XML
@@ -39,7 +39,7 @@ module Xtractor
 
     def parser
       Class.new do
-        include ::Xtractor
+        include ::Flexparser
 
         property 'parts' do
           property 'inventory', collection: true do
@@ -51,7 +51,7 @@ module Xtractor
 
     def pref_parser
       Class.new do
-        include ::Xtractor
+        include ::Flexparser
 
         property 'content:encoded'
       end

@@ -1,6 +1,6 @@
 require 'test_helper'
 
-module Xtractor
+module Flexparser
   class ClassMethodsTest < Minitest::Test
     def xml
       <<-XML
@@ -24,7 +24,7 @@ module Xtractor
 
     def parser
       Class.new do
-        include ::Xtractor
+        include ::Flexparser
 
         property 'bookstore' do
           property 'category'
@@ -41,7 +41,7 @@ module Xtractor
     end
 
     def test_inherits_anonymous
-      assert(feed.bookstore.class < Xtractor::AnonymousParser)
+      assert(feed.bookstore.class < Flexparser::AnonymousParser)
     end
 
     def test_defines_accessors

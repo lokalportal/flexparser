@@ -1,4 +1,8 @@
-module Xtractor
+module Flexparser
+  #
+  # Class to build handle turn a given object into
+  # a Fragment. Used mostly as a Safeguard.
+  #
   class FragmentBuilder
     class << self
       def build(str, namespaces: {})

@@ -1,6 +1,6 @@
 require 'test_helper'
 
-module Xtractor
+module Flexparser
   class FragmentTest < Minitest::Test
     def xml
       <<-XML
