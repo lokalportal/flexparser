@@ -1,5 +1,15 @@
 sudo: false
 language: ruby
 rvm:
+  - 2.2.4
+  - 2.2.1
+  - 2.3.0
   - 2.3.3
-before_install: gem install bundler -v 1.13.7
+  - 2.4.1
+before_install: gem install bundler flay rubocop
+install:
+  - bundle install --retry=3
+script:
+  - bundle exec rake test
+  - bundle exec rubocop
+  - bundle exec flay
