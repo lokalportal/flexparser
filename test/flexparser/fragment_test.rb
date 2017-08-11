@@ -33,6 +33,14 @@ module Flexparser
       XML
     end
 
+    def bob_fragment
+      fragment(bob_xml)
+    end
+
+    def alice_fragment
+      fragment(alice_xml)
+    end
+
     def fragment(str = xml, namespaces: {})
       Fragment.new(str, namespaces: namespaces)
     end
@@ -47,8 +55,8 @@ module Flexparser
     end
 
     def test_nested_namespaces
-      assert_equal fragment(fragment(alice_xml)).pns, fragment(alice_xml).pns
-      assert_equal fragment(fragment(bob_xml)).pns, fragment(bob_xml).pns
+      assert_equal fragment(alice_fragment).pns, fragment(alice_xml).pns
+      assert_equal fragment(bob_fragment).pns, fragment(bob_xml).pns
     end
   end
 end
