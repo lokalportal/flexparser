@@ -25,8 +25,9 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'xpath', '~> 2.1'
   spec.add_development_dependency 'guard', '~> 2.14'
   spec.add_development_dependency 'guard-minitest', '~> 2.4'
-  spec.add_development_dependency 'pry-byebug', '~> 3.4'
   spec.add_development_dependency 'bundler', '~> 1.13'
   spec.add_development_dependency 'rake', '~> 10.0'
   spec.add_development_dependency 'minitest', '~> 5.0'
+  spec.add_development_dependency 'rubocop', '~> 0.49'
+  spec.add_development_dependency 'flay', '~> 2.10'
 end

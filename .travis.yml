@@ -9,7 +9,7 @@ rvm:
   - jruby
 before_install: gem install bundler flay rubocop
 install:
-  - bundle install --retry=3 --without development
+  - bundle install --retry=3 --with development
 script:
   - bundle exec rake test
   - bundle exec rubocop
