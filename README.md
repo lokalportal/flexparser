@@ -1,4 +1,6 @@
+
 # Flexparser
+ ![travis](https://travis-ci.org/lokalportal/flexparser.svg?branch=master) 
 `Flexparser` provides an easy to use DSL for flexible, robust xml parsers.  The goal of flexparser is to be able to write **One Parser to parse them all**. 
 
 ## Installation
