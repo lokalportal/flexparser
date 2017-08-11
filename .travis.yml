@@ -6,9 +6,10 @@ rvm:
   - 2.3.0
   - 2.3.3
   - 2.4.1
+  - jruby
 before_install: gem install bundler flay rubocop
 install:
-  - bundle install --retry=3
+  - bundle install --retry=3 --without development
 script:
   - bundle exec rake test
   - bundle exec rubocop
