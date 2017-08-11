@@ -1,17 +1,18 @@
 # Flexparser
-`Flexparser` provides an easy to use DSL for flexible, robust xml parsers.  The goal of eflexparser is to be able to write **One Parser to parse them all**. 
+`Flexparser` provides an easy to use DSL for flexible, robust xml parsers.  The goal of flexparser is to be able to write **One Parser to parse them all**. 
 
 ## Installation
 
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'flexparser', path: 'vendor/gems/' # Or whereever you have eflexparser stored
+gem 'flexparser'
 ```
 
-Since this gem is private, it can only be vendored into a project right now. 
-
-**BEWARE:** Since i started working on this gem, another gem by the name of `flexparser` has been published to rubygems. So calling `gem install flexparser` will in fact install the wrong gem.
+Or simply
+```shell
+gem install flexparser
+```
 
 ## Usage
 #### Basics:
@@ -58,7 +59,7 @@ work.story #=> ['The Call of Cthulhu', 'Dagon', 'The Nameless City']
 ```
 
 #### Nested Parsers
-Sometimes you want more than to just xtract a String. This way you can make your parser return complex Objects and nest parsers as deep as you like.
+Sometimes you want more than to just extract a String. This way you can make your parser return complex Objects and nest parsers as deep as you like.
 ```ruby
 library = "
 <book>
@@ -119,6 +120,24 @@ class UniParser
   property %w[image picture @img media:image], name: 'visual', type: URI, collection: true
 end
 ```
+#### Defining a parser with a block
+When defining nested parsers, you would use a block. Like this:
+```ruby
+class ParserClass
+  include Flexparser
+  
+  property 'story', collection: true do
+    property 'author'
+    property 'title'
+  end
+end
+```
+When passing a block to a parser definition, a new class is created that basically looks like this:
+```ruby
+Class.new { include Flexparser }
+```
+The block is then `class_eval`ed on this anonymous class. Thats gives you a lot of flexibility in definen your parsers. 
+
 ### Configuration
 You can configure Flexparser by using a block (for example in an initializer) like so:
 ```ruby
@@ -129,7 +148,7 @@ end
 At time of writing there are two Options:
 
 ####  `explicit_property_naming` 
-**Default: ** `true`
+**Default:**  `true`
 If this is `true` you need to specify a `:name` for your `property` everytime there is more than one tag in your tag-list.
 Example: 
 ```ruby
@@ -153,7 +172,7 @@ class SomeParser
   property 'inventory'
 end
 
-xml = "<inventory xmlns="www.my-inventory.com">james</inventory>"
+xml = '<inventory xmlns="www.my-inventory.com">james</inventory>'
 
 # The inventory can't be found because it is namespaced.
 SomeParser.parse(xml).inventory #=> nil :(
@@ -163,7 +182,7 @@ class SomeBetterParser
   property 'inventory'
 end
 
-xml = "<inventory xmlns="www.my-inventory.com">james</inventory>"
+xml = '<inventory xmlns="www.my-inventory.com">james</inventory>'
 
 # The inventory can be found because we don't care.
 SomeParser.parse(xml).inventory #=> 'james'
@@ -181,20 +200,3 @@ The `Flexparser` module defines certain class methods. Most importantly `propert
 The Parsers use an instance of `Flexparser::XPaths` to handle the array of tags that they are passed.
 When everything is setup (i.e. the class is loaded), you can call `::parse` on your MainClass and pass it an XML string.  At this point the MainClass instantiates itself and the `TagParser`s and `CollectionParser`s extract a value from the xml, that is then assigned to the newly created MainClass instance.
 
-#### Defining a parser with a block
-When defining nested parsers, you would use a block. Like this:
-```ruby
-class ParserClass
-  include Flexparser
-  
-  property 'story', collection: true do
-    property 'author'
-    property 'title'
-  end
-end
-```
-When passing a block to a parser definition, a new class is created that basically looks like this:
-```ruby
-Class.new { include Flexparser }
-```
-The block is then `class_eval`ed on this anonymous class. Thats gives you a lot of flexibility in definen your parsers. 
