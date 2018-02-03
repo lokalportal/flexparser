@@ -5,14 +5,17 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'flexparser/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = 'flexparser'
-  spec.version       = Flexparser::VERSION
-  spec.authors       = ['Paul Martensen']
-  spec.email         = ['paul.martensen@gmx.de']
-  spec.licenses      = ['GPL-3.0']
-  spec.homepage      = 'https://github.com/lokalportal/flexparser'
-  spec.summary       = 'A xml-parser dsl'
-  spec.description   = 'A flexible and robust parser-dsl.'
+  spec.name                  = 'flexparser'
+  spec.version               = Flexparser::VERSION
+  spec.authors               = ['Paul Martensen']
+  spec.email                 = ['paul.martensen@gmx.de']
+  spec.licenses              = ['GPL-3.0']
+  spec.homepage              = 'https://github.com/lokalportal/flexparser'
+  spec.summary               = 'A xml-parser dsl'
+  spec.required_ruby_version = '>= 2.1.0'
+  spec.description           = <<-DESC
+    A flexible and robust parser-dsl which is escpecially good for data-normalization.
+  DESC
 
   spec.files = `git ls-files -z`.split("\x0").reject do |f|
     f.match(%r{^(test|spec|features)/})
