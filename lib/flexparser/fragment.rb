@@ -31,6 +31,9 @@ module Flexparser
         .build(doc.xpath(path, propagating_namespaces))
     end
 
+    #
+    # The namespaces that are propagating to the child-fragment of this.
+    #
     def propagating_namespaces
       return @propagated_namespaces unless doc.respond_to?(:namespaces)
       if doc.respond_to?(:collect_namespaces)
