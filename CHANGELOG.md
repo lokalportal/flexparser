@@ -10,4 +10,5 @@
 
 ## master
 
+* Added minimum required ruby version.
 * Updated dependencies.
