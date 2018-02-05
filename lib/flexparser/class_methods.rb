@@ -6,6 +6,11 @@ module Flexparser
     #
     # Applies the previously set up property-structure to the given xml
     # and returns Instances of the including Class.
+    # @param xml [String] The xml string to be parsed by this parser.
+    # @param _options [Hash] an (as of yet) unused options hash.
+    #   Swallowing options here keeps compatability with HappyMapper.
+    # @return [Object] An object of `self.class` that is initialized
+    #   with the extracted values from its subparsers.
     #
     def parse(xml, _options = {})
       return if parsers.empty?
