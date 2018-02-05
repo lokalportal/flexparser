@@ -10,5 +10,6 @@
 
 ## master
 
+* Added some more documentation to Classmethods#parse.
 * Added minimum required ruby version.
 * Updated dependencies.
